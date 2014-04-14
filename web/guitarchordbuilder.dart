@@ -1,4 +1,6 @@
 import 'dart:html';
+import 'dart:math';
+
 CanvasElement cvs;
 CanvasRenderingContext2D ctx;
 
@@ -13,6 +15,9 @@ void main() {
   cvs = querySelector("#cvs");
   ctx = cvs.getContext("2d");
   initBoard(0,15);
+  setFingerPos(1,3,"p5");
+  setFingerPos(2,2,"R");
+
 }
 
 void initBoard(start,frets){
@@ -41,7 +46,18 @@ void drawFret(start,frets){
      ctx.fillText("$i", OFFSET_X+FRET_SPACE*(i-1), OFFSET_Y+NECK_WIDTH+STRING_SPACE);
    }
   }
-   ctx.stroke();
+  ctx.stroke();
 }
 
+void setFingerPos(string,fret,[type]){
+  ctx.font = "17px sans-serif";
+  if(type != null){
+     ctx.fillText(type,OFFSET_X+(fret+0.3)*FRET_SPACE,OFFSET_Y+(string+0.3)*STRING_SPACE);
+  } else {
+     ctx.beginPath();
+     ctx.arc(OFFSET_X+(fret+0.5)*FRET_SPACE, OFFSET_Y+string*STRING_SPACE , STRING_SPACE/3, 0,PI*2 , false);
+     ctx.closePath();
+     ctx.fill();
+  }
+}
 
