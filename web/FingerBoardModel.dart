@@ -2,21 +2,38 @@
 class FingerBoardModel{
 
   List<int> openStrings;
-  final List<int> intToNote = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
+  final List<String> intToNote = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
 
   FingerBoardModel([List<int> tuning]){
     if(tuning != null){
       this.openStrings = tuning;
     } else {
-       this.openStrings = [0x24,0x29,0x32,0x37,0x3B,0x44];
+       this.openStrings = [0x44,0x3B,0x37,0x32,0x29,0x24];
     }
   }
 
-  getNoteName(int note){
+  String getNoteName(int note){
     return '${this.intToNote[note%16]}${(note / 15).floor()}';
   }
+  int getNoteWithHex(int note){
+    return note%16;
+  }
+ int getNoteWithStringAndFret(int string, int fret){
+     return (this.getNoteWithHex(this.openStrings[string-1])+fret)%12;
+  }
 
-
+ List<int> collectSameNotes(note){
+   int target = this.getNoteWithHex(note);
+   var results = [];
+   int a;
+   for(int s=1;s<6;s++){
+     for(int f=0;f<13;f++){
+       a = this.getNoteWithStringAndFret(s, f);
+      if(a == target)results.add({"s":s,"f":f});
+     }
+   }
+   return results;
+ }
 }
 
 /*

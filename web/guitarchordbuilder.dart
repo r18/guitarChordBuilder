@@ -10,7 +10,7 @@ final int OFFSET_Y = 20;
 final int STRING_SPACE = 20;
 final int STRINGS = 5;
 final int FRET_SPACE = 60;
-final int NECK_WIDTH =STRING_SPACE*(STRINGS+2);
+final int NECK_WIDTH = STRING_SPACE*(STRINGS+2);
 
 FingerBoardModel board;
 
@@ -23,6 +23,8 @@ void main() {
   for(int i=0;i<6;i++){
     setFingerPos(i,1,board.getNoteName(board.openStrings[i]));
   }
+  print(board.collectSameNotes(0));
+
 }
 
 void initBoard(start,frets){
